@@ -21,4 +21,4 @@ jobs:
     - run: sudo apt install openjdk-8-jdk
     - run: npm install
     - run: npm run generate-docs
-    - run: cat /tmp/test/api-docs/user/model/user.ts
+    - run: cat /tmp/api-docs/user/model/user.ts
