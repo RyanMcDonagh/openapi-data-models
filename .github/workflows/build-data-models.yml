@@ -18,6 +18,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: apt install openjdk-8-jdk
+    - run: sudo apt install openjdk-8-jdk
     - run: npm run generate-docs
     - run: cat /tmp/test/api-docs/user/model/user.ts
