@@ -1,0 +1,313 @@
+openapi: 3.0.0
+servers:
+  - url: 'http://api.myapp.com/v2'
+info:
+  description: >-
+    This is a sample Post service.
+  version: 1.0.0
+  title: My Post Service
+  license:
+    name: Apache-2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: Post
+    description: Post API Endpoints
+paths:
+  /posts:
+    get:
+      tags: 
+        - Post
+      summary: Get a list of Posts
+      responses:
+        200:
+          description: Successful Response
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostListResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        401:
+          description: Unauthorized Request
+        403:
+          description: Forbidden Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenRequestResponse'
+        404:
+          description: Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+    post:
+      tags:
+        - Post
+      summary: Add new Posts
+      requestBody:
+        $ref: '#/components/requestBodies/PostArray'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized Request
+        403:
+          description: Forbidden Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenRequestResponse'
+        404:
+          description: Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+      security:
+        - api_key: []
+  '/posts/{postId}':
+    get:
+      tags:
+        - Post
+      summary: Find a Post by ID
+      description: Returns a requested post
+      parameters:
+        - $ref: '#/components/parameters/postId'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        401:
+          description: Unauthorized Request
+        403:
+          description: Forbidden Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenRequestResponse'
+        404:
+          description: Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+      security:
+        - api_key: []
+    put:
+      tags: 
+        - Post
+      summary: Update a Post
+      description: Updates a Post
+      parameters:
+        - $ref: '#/components/parameters/postId'
+      responses:
+        204:
+          description: Successful Response
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        401:
+          description: Unauthorized Request
+        403:
+          description: Forbidden Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenRequestResponse'
+        404:
+          description: Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+      security:
+        - api_key: []
+    delete:
+      tags:
+        - Post
+      summary: Delete a Post
+      parameters:
+        - name: postId
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        204:
+          description: Successful Response
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        401:
+          description: Unauthorized Request
+        403:
+          description: Forbidden Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenRequestResponse'
+        404:
+          description: Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+      security:
+        - api_key: []
+ 
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+components:
+  requestBodies:
+    PostArray:
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Post'
+      description: List of post object
+      required: true
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
+  parameters:
+    postId:
+      name: postId
+      in: path
+      description: Post ID
+      required: true
+      schema:
+        type: integer
+        format: int64
+  schemas:
+    Post:
+      title: Post
+      description: A Post on my Application
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        postname:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone:
+          type: string
+        postStatus:
+          type: integer
+          format: int32
+          description: Post Status
+    PostListResponse:
+      title: Post List Response
+      description: A list of Posts
+      type: object
+      properties:
+        posts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+    BadRequestResponse:
+      title: Bad Request Response
+      description: Response sent when an invalid request has been received. 
+      type: object
+      properties:
+        message:
+          type: string
+          description: Informative message to explain why the request was invalid.
+    ForbiddenRequestResponse:
+      title: Forbidden Request Response
+      description: Response sent when a client attempts to access a resource they do not have permission to access.
+      type: object
+      properties:
+        message:
+          type: string
+          description: Informative message to explain why the request was forbidden.
+    ResourceNotFoundResponse:
+      title: Resource Not Found Response
+      description: Response sent when a client attempts to access a resource that does not exist.
+      type: object
+      properties:
+        message:
+          type: string
+          description: Informative message to explain which resource does not exist.
+    InternalServerErrorResponse:
+      title: Internal Server Error Response
+      description: Response sent when the API Server has encounted an internal error.
+      type: object
+      properties:
+        message:
+          type: string
+          description: Informative message to explain the error that occurred.
