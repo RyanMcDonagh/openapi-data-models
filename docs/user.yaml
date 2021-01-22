@@ -91,9 +91,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerErrorResponse'
       security:
-        - petstore_auth:
-            - 'write:pets'
-            - 'read:pets'
+        - api_key: []
   '/users/{userId}':
     get:
       tags:
@@ -182,7 +180,7 @@ paths:
       parameters:
         - name: userId
           in: path
-          description: Pet id to delete
+          description: User ID
           required: true
           schema:
             type: integer
@@ -234,14 +232,6 @@ components:
       description: List of user object
       required: true
   securitySchemes:
-    petstore_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
-          scopes:
-            'write:pets': modify pets in your account
-            'read:pets': read your pets
     api_key:
       type: apiKey
       name: api_key
@@ -258,7 +248,7 @@ components:
   schemas:
     User:
       title: User
-      description: A User who is purchasing from the pet store
+      description: A User of my Application
       type: object
       properties:
         id:
