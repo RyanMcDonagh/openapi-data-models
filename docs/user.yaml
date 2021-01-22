@@ -1,0 +1,323 @@
+openapi: 3.0.0
+servers:
+  - url: 'http://api.myapp.com/v2'
+info:
+  description: >-
+    This is a sample User service.
+  version: 1.0.0
+  title: My User Service
+  license:
+    name: Apache-2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: User
+    description: User API Endpoints
+paths:
+  /users:
+    get:
+      tags: 
+        - User
+      summary: Get a list of Users
+      responses:
+        200:
+          description: Successful Response
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserListResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        401:
+          description: Unauthorized Request
+        403:
+          description: Forbidden Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenRequestResponse'
+        404:
+          description: Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+    post:
+      tags:
+        - User
+      summary: Add new Users
+      requestBody:
+        $ref: '#/components/requestBodies/UserArray'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized Request
+        403:
+          description: Forbidden Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenRequestResponse'
+        404:
+          description: Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+      security:
+        - petstore_auth:
+            - 'write:pets'
+            - 'read:pets'
+  '/users/{userId}':
+    get:
+      tags:
+        - User
+      summary: Find a User by ID
+      description: Returns a requested user
+      parameters:
+        - $ref: '#/components/parameters/userId'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        401:
+          description: Unauthorized Request
+        403:
+          description: Forbidden Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenRequestResponse'
+        404:
+          description: Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+      security:
+        - api_key: []
+    put:
+      tags: 
+        - User
+      summary: Update a User
+      description: Updates a User
+      parameters:
+        - $ref: '#/components/parameters/userId'
+      responses:
+        204:
+          description: Successful Response
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        401:
+          description: Unauthorized Request
+        403:
+          description: Forbidden Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenRequestResponse'
+        404:
+          description: Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+      security:
+        - api_key: []
+    delete:
+      tags:
+        - User
+      summary: Delete a User
+      parameters:
+        - name: userId
+          in: path
+          description: Pet id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        204:
+          description: Successful Response
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        401:
+          description: Unauthorized Request
+        403:
+          description: Forbidden Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenRequestResponse'
+        404:
+          description: Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+      security:
+        - api_key: []
+ 
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+components:
+  requestBodies:
+    UserArray:
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+      description: List of user object
+      required: true
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
+          scopes:
+            'write:pets': modify pets in your account
+            'read:pets': read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
+  parameters:
+    userId:
+      name: userId
+      in: path
+      description: User ID
+      required: true
+      schema:
+        type: integer
+        format: int64
+  schemas:
+    User:
+      title: User
+      description: A User who is purchasing from the pet store
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone:
+          type: string
+        userStatus:
+          type: integer
+          format: int32
+          description: User Status
+    UserListResponse:
+      title: User List Response
+      description: A list of Users
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    BadRequestResponse:
+      title: Bad Request Response
+      description: Response sent when an invalid request has been received. 
+      type: object
+      properties:
+        message:
+          type: string
+          description: Informative message to explain why the request was invalid.
+    ForbiddenRequestResponse:
+      title: Forbidden Request Response
+      description: Response sent when a client attempts to access a resource they do not have permission to access.
+      type: object
+      properties:
+        message:
+          type: string
+          description: Informative message to explain why the request was forbidden.
+    ResourceNotFoundResponse:
+      title: Resource Not Found Response
+      description: Response sent when a client attempts to access a resource that does not exist.
+      type: object
+      properties:
+        message:
+          type: string
+          description: Informative message to explain which resource does not exist.
+    InternalServerErrorResponse:
+      title: Internal Server Error Response
+      description: Response sent when the API Server has encounted an internal error.
+      type: object
+      properties:
+        message:
+          type: string
+          description: Informative message to explain the error that occurred.
