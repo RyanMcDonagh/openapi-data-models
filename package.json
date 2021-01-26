@@ -1,16 +1,17 @@
 {
   "name": "docs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate-docs": "openapi-generator-cli generate -i ./docs/user.yaml -g typescript-node -o /tmp/api-docs/user/"
+    "generate-models": "openapi-generator-cli generate -i ./docs/user.yaml -g typescript-node -o /tmp/api-models/user/"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.1.18"
-  }
+  },
+  "dependencies": {}
 }
