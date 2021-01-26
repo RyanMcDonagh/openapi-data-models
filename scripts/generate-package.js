@@ -94,6 +94,37 @@ function writeServiceClassFile(serviceClassFileDirectory, serviceClassFileConten
   fs.writeFileSync(`${serviceClassFileDirectory}/index.ts`, serviceClassFileContent);
 }
 
+function generatePackageJSONFile(values) {
+  if (!values.name) {
+    throw new Error('Could not generate package.json - missing name value');
+  }
+  if (!values.version) {
+    throw new Error('Could not generate package.json - missing version value');
+  }
+  if (!values.filePath) {
+    throw new Error('Could not generate package.json - missing filePath value');
+  }
+
+  const contentString = generatePackageJSONFileString(values);
+  fs.writeFileSync(`${values.filePath}/package.json`, contentString);
+}
+
+function generatePackageJSONFileString(values) {
+  return `{
+    "name": "ryan-mcdonagh-data-models-${values.name.toLowerCase()}",
+    "version": "${values.version}"
+}`;
+}
+
+function publishPackage(packageFilePath) {
+  child_process.execSync(
+    'npm publish',
+    {
+      cwd: packageFilePath,
+    },
+    execCallback,
+  );
+}
 
 
 function generatePackages() {
@@ -105,6 +136,12 @@ function generatePackages() {
   
     runOpenAPIGenerator(file, serviceName);
     generateServiceClassFiles(serviceName);
+    generatePackageJSONFile({
+      name: serviceName,
+      version,
+      filePath: `${outputDirectory}/${serviceName}`,
+    });
+    publishPackage(`${outputDirectory}/${serviceName}`);
   }
 }
 
