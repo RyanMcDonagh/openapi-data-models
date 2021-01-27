@@ -1,4 +1,4 @@
-name: Build Data Models
+name: Validate Documentation Files
 
 on:
   pull_request:
