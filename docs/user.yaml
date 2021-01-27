@@ -4,8 +4,8 @@ servers:
 info:
   description: >-
     This is a sample User service.
-  version: 1.0.0
-  title: My User Service
+  version: 1.0.1
+  title: User
   license:
     name: Apache-2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
