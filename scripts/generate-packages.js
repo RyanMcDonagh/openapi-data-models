@@ -12,7 +12,7 @@ function createOutputDirectoryIfNotExists(outputDirectory) {
     fs.mkdirSync(outputDirectory, { recursive: true });
     console.log('Output directory created.');
   } else {
-    console.log('Exists');
+    console.log('Output directory exists');
   }
 }
 
@@ -22,7 +22,6 @@ function getServicePropertiesFromDocsFile(file) {
   let serviceName = '';
 
   for (const line of content) {
-    // console.log({ line });
     if (line.includes('version')) {
       version = line.replace(' ', '').split(':')[1].replace(' ', '');
     }
@@ -137,8 +136,6 @@ function generatePackages() {
   createOutputDirectoryIfNotExists(outputDirectory);
   const docsFileNames = fs.readdirSync(docsDirectory);
 
-  console.log({ docsFileNames });
-  
   for (const file of docsFileNames) {
     const { version, serviceName } = getServicePropertiesFromDocsFile(file);
   
