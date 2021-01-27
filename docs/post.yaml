@@ -164,7 +164,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResourceNotFoundResponse'
+                $ref: '#/components/schemas/'
         500:
           description: Internal Server Error
           content:
