@@ -270,6 +270,8 @@ components:
           type: integer
           format: int32
           description: Post Status
+        approved:
+          type: boolean
     PostListResponse:
       title: Post List Response
       description: A list of Posts

@@ -6,8 +6,6 @@ name: Build Data Models
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
   build:
@@ -20,5 +18,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: sudo apt install openjdk-8-jdk
     - run: npm install
-    - run: npm run generate-docs
-    - run: cat /tmp/api-docs/user/model/user.ts
+    - run: node ./scripts/generate-packages.js
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

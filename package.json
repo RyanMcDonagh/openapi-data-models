@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@jsdevtools/npm-publish": "^1.4.3",
     "@openapitools/openapi-generator-cli": "^2.1.18"
   },
   "dependencies": {}
