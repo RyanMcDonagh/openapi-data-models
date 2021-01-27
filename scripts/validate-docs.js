@@ -18,10 +18,13 @@ const docsFileNames = fs.readdirSync(docsDirectory);
 
 for (const file of docsFileNames) {
 
+  const docsFile = `${docsDirectory}/${file}`
+
+  console.log(`${docsFile}: Validating documentation file...`)
   try {
     child_process.execSync(
       `./node_modules/.bin/openapi-generator-cli validate \
-        -i ${docsDirectory}/${file}
+        -i ${docsFile}
       `,
       execCallback,
     );
@@ -29,4 +32,6 @@ for (const file of docsFileNames) {
     console.log(ex);
     exit(1);
   }
+
+  console.log(`${docsFile}: Documentation valid!\n\n`)
 }
