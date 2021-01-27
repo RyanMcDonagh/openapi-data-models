@@ -1,5 +1,6 @@
 const fs = require('fs');
 const child_process = require('child_process');
+const npmPublish = require("@jsdevtools/npm-publish");
 
 const docsDirectory = './docs';
 const baseDirectory = '/tmp/api-models'
@@ -125,13 +126,10 @@ function generatePackageJSONFileString(values) {
 }
 
 function publishPackage(packageFilePath) {
-  child_process.execSync(
-    'npm publish',
-    {
-      cwd: packageFilePath,
-    },
-    execCallback,
-  );
+  npmPublish({
+    package: `${packageFilePath}/package.json`,
+    token: process.env.NPM_TOKEN
+  }).catch(ex => console.log(ex));
 }
 
 
