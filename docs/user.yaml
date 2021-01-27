@@ -4,7 +4,7 @@ servers:
 info:
   description: >-
     This is a sample User service.
-  version: 1.0.1
+  version: 1.0.2
   title: User
   license:
     name: Apache-2.0
