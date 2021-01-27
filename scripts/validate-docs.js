@@ -1,5 +1,6 @@
 const fs = require('fs');
 const child_process = require('child_process');
+const { exit } = require('process');
 
 function execCallback(error, stderr, stdout) {
   if (error) {
@@ -26,5 +27,6 @@ for (const file of docsFileNames) {
     );
   } catch (ex) {
     console.log(ex);
+    exit(1);
   }
 }
